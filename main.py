@@ -29,9 +29,13 @@ def create_random_tournament(n,p = 1, draw_proba=0.05):
 	return M
 	
 
-def 2D_projection(M):
-	eigval, eigvec = np.linalg.eig(M) # complex eigenvalues but conjugate ! => 2D MDS is possible
+def projection_2D(M):
+	eigval, eigvec = np.linalg.eig(M) # complex eigenvalues but conjugate ! => 2D MDS is not possible
 	print(np.abs(eigval))
+	indices = np.argsort(np.abs(eigval))[::-1]
+	print(indices)
+	print(eigval[indices[0:2]])
+	return eigvec[:,indices[0:2]]
 	
 
 if __name__ == "__main__":
@@ -44,4 +48,5 @@ if __name__ == "__main__":
 		p = int(sys.argv[2])
 	M = create_random_tournament(n,p)
 	#print(M)
-	2D_projection(M)
+	subspace = projection_2D(M)
+	print(subspace)
